@@ -1,7 +1,7 @@
 # hotel-project
 
-#Integrantes
+##Integrantes
 
-#Martin Liut
-#Matias Reynoso
-#Federico Palomero
+###Martin Liut
+###Matias Reynoso
+###Federico Palomero
