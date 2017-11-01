@@ -1,6 +1,6 @@
 ### hotel-project
 
-##Integrantes
+#Integrantes
 
 #Martin Liut
 #Matias Reynoso
