@@ -1,0 +1,46 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+{% block title %}Tus Hoteles{% endblock %}
+
+{% block content %}
+<div class="container ml-container">
+    {% if estates %}
+    <h1 class="text-center">Hoteles disponibles</h1>
+    <hr>
+    {% for e in estates %}
+    <div class="panel panel-default panel-hotel">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-3">
+                    <img src="{% static 'img/hotel.jpg' %}" class="img-responsive img-thumbnail img-estate" alt="">
+                </div>
+                <div class="col-lg-9">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <h2><span class="glyphicon glyphicon-home"></span> {{e.title}}</h2>
+                            <h5>{{e.description}}</h5>
+                        </div>
+                        <div class="col-lg-4 text-right hotel-dates" style="color: #ccc">
+                            <p><b>Ciudad:</b> {{e.city}}</p>
+                            <p><b>Propietario:</b> {{e.host}}</p>
+                            <p style="color: #04519b"><b>Fecha límite:</b> {{e.dateTo}}</p>
+                        </div>
+                    </div>
+                    <div class="well well-service">
+                        <h6>Servicios</h6>
+                        <p>{{e.services}}</p>
+                    </div>
+                    <div class="well well-confort">
+                        <h6>Comodidades</h6>
+                        <p>{{e.confort}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <h1>No hay hoteles disponibles</h1>
+    {% endif %}
+</div>
+{% endblock %}
