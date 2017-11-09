@@ -6,3 +6,6 @@ def index(request):
     estates = Estate.objects.all()
     contexto = { 'estates' : estates }
     return render(request, 'estate/index.html', contexto)
+
+def city_filter(request):
+    return render(request, 'filter/index.html')

@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class City(models.Model):
     name = models.CharField(max_length=50, null = False, blank = False)
@@ -6,29 +7,32 @@ class City(models.Model):
     def __str__(self):
         return self.name;
 
-class User(models.Model):
-    name = models.CharField(max_length=50, null = False, blank = False)
-    lastName = models.CharField(max_length = 50, null = False, blank = False)
-    email = models.EmailField(max_length = 50, null = False, blank = False)
-    userName = models.CharField(max_length=50, null=False, blank=False)
-
-    def __str__(self):
-        return self.name + ' ' + self.lastName + ' (' + self.userName + ')';
-
-class Estate(models.Model):
+class Estate (models.Model):
     title = models.CharField(max_length=50, null=False, blank=False)
     description = models.TextField(null=True, blank=True)
-    confort= models.TextField(null=True, blank=True)
+    confort = models.TextField(null=True, blank=True)
     services = models.TextField(null=True, blank=True)
     maxPax = models.IntegerField(null=False, blank=False, default=1)
-    dateFrom = models.DateTimeField(null=False, blank=False)
-    dateTo = models.DateTimeField(null=False, blank=False)
     price = models.FloatField(null=False, blank=True, default=0)
-    image = models.CharField(max_length=512, null=True, blank=True)
+    image = models.CharField(max_length=200,  null=True, blank=True)
     city = models.ForeignKey(City, null=False, blank=False)
     host = models.OneToOneField(User, null=False, blank=False)
 
+    def __str__(self):
+        return self.title;
+
+class Resident(models.Model):
+    name = models.CharField(max_length=50, null= False, blank=False)
+    surname = models.CharField(max_length=50, null=False, blank=False)
+    email = models.EmailField(max_length=50, null=False, blank=False)
+
 class Booking(models.Model):
+    number = models.AutoField(primary_key=True)
     date = models.DateTimeField(null=False, blank=False)
-    estate = models.ForeignKey(Estate, null=False, blank=False)
-    resident = models.OneToOneField(User, null=False, blank=False, related_name='fk_resident')
+    total_price = models.FloatField(null=False, blank=False)
+    resident = models.ForeignKey(Resident, null=False, blank=False)
+
+class RentalDate(models.Model):
+    date = models.DateTimeField(null=False, blank=False)
+    booking = models.ForeignKey(Booking, null=True, blank=True)
+    estate = models.ManyToManyField(Estate, null=False, blank=False)
