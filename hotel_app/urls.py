@@ -4,5 +4,6 @@ from hotel_app.views import *
 
 urlpatterns = [
     url(r'^$', index),
-    url(r'/city_filter/', city_filter),
+    url(r'hosts/', hosts),
+    url(r'estate/(?P<id_estate>\d+)/reserve', index_reserve, name="estate_reserve")
 ]
