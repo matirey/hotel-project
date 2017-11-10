@@ -1,7 +1,8 @@
 from django.shortcuts import render
-from hotel_app.models import City, Estate, Booking
-from hotel_app.forms import *
+from hotel_app.models import City, Estate, Booking, Resident
+from hotel_app.forms import ResidentForm
 from django.contrib.auth.models import User
+from django.contrib import messages
 from django.http import HttpResponse
 from django.utils.html import escape
 import datetime
@@ -34,19 +35,33 @@ def hosts(request):
     return render(request, 'host/index.html', context)
 
 def index_reserve(request, id_estate):
-    estate = Estate.objects.get(id = id_estate)
-    form = ResidentForm(initial={'name': 'Federico', 'surname': 'Palomero', 'email':'aldosivi@yahoo.com'})
-    now = datetime.datetime.now
-    context = {
-        'e': estate,
-        'form' : form,
-        'now':now
-    }
-    return render(request, 'reserve/index.html', context)
+    messages = None
+    if request.method == 'GET':
+        estate = Estate.objects.get(id = id_estate)
+        form = ResidentForm(initial={'name': 'Federico', 'surname': 'Palomero', 'email':'aldosivi@yahoo.com'})
+        now = datetime.datetime.now
+        context = {
+            'e': estate,
+            'form' : form,
+            'now':now
+        }
+        return render(request, 'reserve/index.html', context)
 
-#def make_reserve(request, id_estate):
-    #try:
-    #    estate = Estate.objects.get(id=id_estate)
-    #    Booking booking = new Booking(datetime.datetime.now(), estate.price, #total_price, resident)
-    #except(e):
-    #print(e)
+
+    if request.method == 'POST': #Cuando se envía la info para la reserva
+        try:
+            estate = Estate.objects.get(id = id_estate)
+            resident = Resident(name = request.POST['name'], surname = request.POST['surname'], email = request.POST['email'])
+            resident.save()
+            booking = Booking(date = datetime.datetime.now(), total_price =  estate.price, resident = resident)
+            context = {
+                'booking':booking,
+                'e' : estate
+            }
+            booking.save()
+            messages.success(request, "Reserva concretada con éxito")
+            return render(request, 'reserve/index.html', context)
+        except Exception as e:
+            print(e)
+
+
