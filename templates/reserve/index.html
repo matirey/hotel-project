@@ -8,6 +8,10 @@
     <hr>
     <div class="row">
         <div class="col-lg-12">
+            {% if messages %}
+            <div class="alert alert-success" role="alert"><h1 style="margin: 0px; display: inline-block"><span class="glyphicon glyphicon-ok-sign"></span> Reserva realizada con exito</h1>
+                <a href="/" class="btn btn-info" style="float: right">OK</a></div>
+            {% endif %}
             <div class="panel panel-default panel-hotel">
                 <div class="esquinero">
                     <span class="precio">$ {{e.price}} por día</span>

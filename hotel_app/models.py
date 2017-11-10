@@ -36,3 +36,4 @@ class RentalDate(models.Model):
     date = models.DateTimeField(null=False, blank=False)
     booking = models.ForeignKey(Booking, null=True, blank=True)
     estate = models.ManyToManyField(Estate, null=False, blank=False)
+
