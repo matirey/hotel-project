@@ -32,6 +32,9 @@ class Booking(models.Model):
     total_price = models.FloatField(null=False, blank=False)
     resident = models.ForeignKey(Resident, null=False, blank=False)
 
+    def __str__(self):
+        return str(self.number) + ". Booking: " + str(self.date.date());
+
 class RentalDate(models.Model):
     date = models.DateTimeField(null=False, blank=False)
     booking = models.ForeignKey(Booking, null=True, blank=True)
