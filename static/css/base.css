@@ -103,3 +103,10 @@ hr {
 .reserve_sheet h2, .reserve_sheet label {
     color: #DBA901;
 }
+
+.ir-arriba {
+    border-radius: 50%;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
